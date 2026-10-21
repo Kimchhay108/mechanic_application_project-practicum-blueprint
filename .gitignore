@@ -210,3 +210,7 @@ $RECYCLE.BIN/
  
 # Local reference documents
 reference_docs/
+ 
+# Student personal Word files
+*.docx
+*.doc
