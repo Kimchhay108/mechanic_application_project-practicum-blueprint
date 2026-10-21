@@ -207,3 +207,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+ 
+# Local reference documents
+reference_docs/
