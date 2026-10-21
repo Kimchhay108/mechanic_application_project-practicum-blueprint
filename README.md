@@ -6,7 +6,7 @@ Bachelor of Computer Science — Individual Capstone
 |---|---|
 | Student | Kimchhay |
 | Advisor | Hang Sopheak |
-| Term | Academic Year 4, Semester 1 (2026) |
+| Term |  Year 4, Semester 1  |
 | Pitch | A hyper-local vehicle maintenance companion for Cambodian scooter riders and car owners that automates preventive servicing with authentic Khmer mechanic slang, dynamic component configs, and 15-minute roadside garage dwell reminders. |
 
 First time here? Read the guide: [template/README.md](template/README.md)
