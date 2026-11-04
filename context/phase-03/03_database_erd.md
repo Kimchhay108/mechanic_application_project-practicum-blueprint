@@ -20,6 +20,8 @@
 
 ## 2. Entity Relationship Diagram
 
+![Database Entity Relationship Diagram](../assets/database_erd.svg)
+
 ```mermaid
 erDiagram
     users ||--o{ vehicles : "owns"

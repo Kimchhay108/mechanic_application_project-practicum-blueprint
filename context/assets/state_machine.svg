@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="1100" height="680" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="shadowFSM" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08" />
+    </filter>
+    <marker id="arrowFSM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,1 L9,5 L0,9 z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="680" fill="#F8FAFC" />
+
+  <!-- Title -->
+  <text x="50" y="50" font-size="22" font-weight="700" fill="#0F172A">MotoCare Cambodia — Reminder State Machine</text>
+  <text x="50" y="75" font-size="13" fill="#64748B">Deterministic 4-State Lifecycle for Vehicle Component Maintenance</text>
+
+  <!-- Start Node -->
+  <circle cx="550" cy="115" r="16" fill="#0F172A" />
+  <text x="550" y="85" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">Vehicle Created &amp; Rules Bound</text>
+  <line x1="550" y1="131" x2="550" y2="165" stroke="#475569" stroke-width="2" marker-end="url(#arrowFSM)" />
+
+  <!-- STATE 1: UPCOMING (GREEN) -->
+  <g transform="translate(410, 170)" filter="url(#shadowFSM)">
+    <rect width="280" height="90" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="2" />
+    <circle cx="30" cy="30" r="10" fill="#10B981" />
+    <text x="52" y="35" font-size="16" font-weight="700" fill="#065F46">UPCOMING (🟢 Green)</text>
+    <text x="24" y="58" font-size="11" fill="#047857">• Healthy operating condition: ρ &lt; 0.80</text>
+    <text x="24" y="74" font-size="11" fill="#047857">• &gt; 20% distance remaining AND &gt; 7 days</text>
+  </g>
+
+  <!-- Arrow Upcoming -> Due Soon -->
+  <line x1="550" y1="260" x2="550" y2="310" stroke="#475569" stroke-width="2" marker-end="url(#arrowFSM)" />
+  <rect x="555" y="272" width="250" height="22" rx="4" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="562" y="287" font-size="10.5" font-weight="600" fill="#475569">Remaining km ≤ 20% OR Days ≤ 7 days</text>
+
+  <!-- STATE 2: DUE SOON (YELLOW) -->
+  <g transform="translate(410, 315)" filter="url(#shadowFSM)">
+    <rect width="280" height="90" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="2" />
+    <circle cx="30" cy="30" r="10" fill="#F59E0B" />
+    <text x="52" y="35" font-size="16" font-weight="700" fill="#92400E">DUE SOON (🟡 Yellow)</text>
+    <text x="24" y="58" font-size="11" fill="#B45309">• Warning threshold: 0.80 ≤ ρ &lt; 1.00</text>
+    <text x="24" y="74" font-size="11" fill="#B45309">• Scheduled local push alert fired</text>
+  </g>
+
+  <!-- Arrow Due Soon -> Overdue -->
+  <line x1="550" y1="405" x2="550" y2="455" stroke="#475569" stroke-width="2" marker-end="url(#arrowFSM)" />
+  <rect x="555" y="418" width="250" height="22" rx="4" fill="#FFFFFF" stroke="#E2E8F0" />
+  <text x="562" y="433" font-size="10.5" font-weight="600" fill="#DC2626">Current Km ≥ Next Due Km OR Date reached</text>
+
+  <!-- STATE 3: OVERDUE (RED) -->
+  <g transform="translate(410, 460)" filter="url(#shadowFSM)">
+    <rect width="280" height="90" rx="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="2" />
+    <circle cx="30" cy="30" r="10" fill="#EF4444" />
+    <text x="52" y="35" font-size="16" font-weight="700" fill="#991B1B">OVERDUE (🔴 Red)</text>
+    <text x="24" y="58" font-size="11" fill="#B91C1C">• Interval exceeded: ρ ≥ 1.00</text>
+    <text x="24" y="74" font-size="11" fill="#B91C1C">• Critical card shown; immediate service needed</text>
+  </g>
+
+  <!-- Sudden large mileage jump shortcut: Upcoming -> Overdue -->
+  <path d="M690,215 L880,215 L880,505 L690,505" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#arrowFSM)" />
+  <rect x="885" y="345" width="180" height="34" rx="4" fill="#FFFFFF" stroke="#FCA5A5" />
+  <text x="892" y="360" font-size="10" font-weight="600" fill="#991B1B">Sudden mileage jump</text>
+  <text x="892" y="373" font-size="9" fill="#991B1B">exceeds target interval</text>
+
+  <!-- STATE 4: SERVICED (RESET) -->
+  <g transform="translate(60, 315)" filter="url(#shadowFSM)">
+    <rect width="270" height="90" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" />
+    <circle cx="30" cy="30" r="10" fill="#3B82F6" />
+    <text x="52" y="35" font-size="16" font-weight="700" fill="#1E40AF">SERVICED (🔵 Reset)</text>
+    <text x="20" y="58" font-size="11" fill="#1E3A8A">• 1-Tap service log recorded</text>
+    <text x="20" y="74" font-size="11" fill="#1E3A8A">• Baseline odometer &amp; date reset</text>
+  </g>
+
+  <!-- Arrows from Upcoming, Due Soon, Overdue -> Serviced -->
+  <!-- From Overdue to Serviced -->
+  <path d="M410,505 L195,505 L195,405" fill="none" stroke="#2563EB" stroke-width="2" marker-end="url(#arrowFSM)" />
+  <text x="270" y="495" font-size="10.5" font-weight="600" fill="#1E40AF">Corrective Service Log</text>
+
+  <!-- From Due Soon to Serviced -->
+  <line x1="410" y1="360" x2="330" y2="360" stroke="#2563EB" stroke-width="2" marker-end="url(#arrowFSM)" />
+  <text x="340" y="350" font-size="10" font-weight="600" fill="#1E40AF">Scheduled</text>
+
+  <!-- From Upcoming to Serviced -->
+  <path d="M410,215 L195,215 L195,315" fill="none" stroke="#2563EB" stroke-width="2" marker-end="url(#arrowFSM)" />
+  <text x="270" y="210" font-size="10.5" font-weight="600" fill="#1E40AF">Early Service Log</text>
+
+  <!-- Arrow from Serviced back to Upcoming -->
+  <path d="M195,315 L195,140 L410,185" fill="none" stroke="#059669" stroke-width="2.5" marker-end="url(#arrowGreen)" />
+  <rect x="205" y="145" width="220" height="24" rx="4" fill="#FFFFFF" stroke="#A7F3D0" />
+  <text x="215" y="161" font-size="11" font-weight="700" fill="#047857">Reset status back to UPCOMING (🟢)</text>
+
+  <!-- Bottom Formula Box -->
+  <rect x="50" y="590" width="1000" height="60" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+  <text x="70" y="615" font-size="12" font-weight="700" fill="#1E293B">DUAL-CONDITION TRIGGER FORMULA:</text>
+  <text x="70" y="635" font-size="12" font-family="'Consolas', monospace" fill="#2563EB">Composite Wear Ratio (ρ) = MAX( ΔKm / TargetKm, ΔDays / TargetDays )</text>
+  <text x="620" y="635" font-size="11" fill="#475569">TargetKm = BaseInterval * WearMultiplier</text>
+</svg>

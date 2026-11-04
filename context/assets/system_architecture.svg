@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350 720" width="1350" height="720" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="clientGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EEF2FF" />
+      <stop offset="100%" stop-color="#E0E7FF" />
+    </linearGradient>
+    <linearGradient id="dataGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7" />
+      <stop offset="100%" stop-color="#FDE68A" />
+    </linearGradient>
+    
+    <filter id="boxShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.07" />
+    </filter>
+
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3B82F6"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748B"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1350" height="720" fill="#FFFFFF" />
+
+  <!-- Header -->
+  <text x="40" y="45" font-size="22" font-weight="700" fill="#0F172A">MotoCare Cambodia — System Architecture Map</text>
+  <text x="40" y="70" font-size="13" fill="#64748B">Multi-Tier Offline-First Architecture (Flutter + Express + PostgreSQL 16 Docker)</text>
+
+  <!-- TIER 1: CLIENT APPLICATION (FLUTTER) -->
+  <rect x="40" y="100" width="560" height="580" rx="14" fill="#F8FAFC" stroke="#93C5FD" stroke-width="2" filter="url(#boxShadow)"/>
+  <rect x="40" y="100" width="560" height="42" rx="14" fill="#3B82F6"/>
+  <text x="60" y="128" font-size="15" font-weight="700" fill="#FFFFFF">CLIENT LAYER: FLUTTER MOBILE APP (iOS &amp; Android)</text>
+
+  <!-- Client Sub-components -->
+  <!-- UI -->
+  <rect x="70" y="165" width="230" height="110" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" />
+  <text x="85" y="195" font-size="14" font-weight="700" fill="#1E3A8A">Mobile UI Layer</text>
+  <text x="85" y="218" font-size="11" fill="#475569">• R/Y/G Vehicle Health Cards</text>
+  <text x="85" y="236" font-size="11" fill="#475569">• Authentic Khmer Slang Tags</text>
+  <text x="85" y="254" font-size="11" fill="#475569">• 1-Tap Quick Action Logger</text>
+
+  <!-- State -->
+  <rect x="330" y="165" width="240" height="110" rx="8" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1.5" />
+  <text x="345" y="195" font-size="14" font-weight="700" fill="#1E3A8A">State Management</text>
+  <text x="345" y="218" font-size="11" fill="#475569">• Riverpod StateNotifiers</text>
+  <text x="345" y="236" font-size="11" fill="#475569">• Vehicle &amp; Reminder Providers</text>
+  <text x="345" y="254" font-size="11" fill="#475569">• Optimistic Offline Dispatcher</text>
+
+  <!-- Local Cache (Drift) -->
+  <rect x="70" y="315" width="500" height="120" rx="8" fill="url(#clientGrad)" stroke="#2563EB" stroke-width="1.5" />
+  <text x="90" y="345" font-size="15" font-weight="700" fill="#1E3A8A">Local Persistence: Drift (SQLite v3)</text>
+  <text x="90" y="370" font-size="12" fill="#334155">• 100% Offline read/write capability (&lt; 5ms latency at roadside stalls)</text>
+  <text x="90" y="392" font-size="12" fill="#334155">• Local tables: vehicles, cached reminders, pending service queue, pinned garages</text>
+  <text x="90" y="414" font-size="12" fill="#334155">• Automatic sync engine flushes queue when mobile data/Wi-Fi is reconnected</text>
+
+  <!-- Background Services -->
+  <rect x="70" y="465" width="500" height="185" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+  <text x="90" y="495" font-size="14" font-weight="700" fill="#0F172A">Native Background OS Services</text>
+  
+  <rect x="90" y="515" width="220" height="115" rx="6" fill="#F1F5F9" stroke="#E2E8F0" />
+  <text x="105" y="540" font-size="12" font-weight="700" fill="#1E293B">At-Garage Dwell Engine</text>
+  <text x="105" y="562" font-size="11" fill="#475569">• 50m circular geofences</text>
+  <text x="105" y="580" font-size="11" fill="#475569">• 15-min dwell continuous filter</text>
+  <text x="105" y="598" font-size="11" fill="#475569">• Zero CPU wake outside zones</text>
+
+  <rect x="330" y="515" width="220" height="115" rx="6" fill="#F1F5F9" stroke="#E2E8F0" />
+  <text x="345" y="540" font-size="12" font-weight="700" fill="#1E293B">Local Notification Tray</text>
+  <text x="345" y="562" font-size="11" fill="#475569">• flutter_local_notifications</text>
+  <text x="345" y="580" font-size="11" fill="#475569">• Proactive overdue alerts</text>
+  <text x="345" y="598" font-size="11" fill="#475569">• "Looks like you're at garage"</text>
+
+  <!-- ARROWS BETWEEN CLIENT & BACKEND -->
+  <!-- Wire from client to backend -->
+  <path d="M600,220 L730,220" fill="none" stroke="#2563EB" stroke-width="2.2" marker-end="url(#arr)" />
+  <text x="665" y="210" font-size="11" font-weight="700" fill="#1E40AF" text-anchor="middle">HTTP REST (JSON)</text>
+  <text x="665" y="238" font-size="10" fill="#64748B" text-anchor="middle">Port 8000 /api/v1</text>
+  <text x="665" y="254" font-size="10" fill="#64748B" text-anchor="middle">Bearer &lt;JWT&gt;</text>
+
+  <!-- TIER 2: BACKEND API LAYER (EXPRESS + TYPESCRIPT) -->
+  <rect x="730" y="100" width="300" height="580" rx="14" fill="#F8FAFC" stroke="#818CF8" stroke-width="2" filter="url(#boxShadow)"/>
+  <rect x="730" y="100" width="300" height="42" rx="14" fill="#4F46E5"/>
+  <text x="750" y="128" font-size="15" font-weight="700" fill="#FFFFFF">BACKEND API (PORT 8000)</text>
+
+  <rect x="750" y="165" width="260" height="95" rx="8" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.5" />
+  <text x="765" y="193" font-size="13" font-weight="700" fill="#312E81">Auth &amp; Validation Gate</text>
+  <text x="765" y="216" font-size="11" fill="#475569">• JWT Bearer Token Verification</text>
+  <text x="765" y="234" font-size="11" fill="#475569">• Zod Payload Schema Sanitization</text>
+
+  <rect x="750" y="280" width="260" height="120" rx="8" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.5" />
+  <text x="765" y="308" font-size="13" font-weight="700" fill="#312E81">Controllers &amp; Services</text>
+  <text x="765" y="331" font-size="11" fill="#475569">• Vehicles &amp; Models Controller</text>
+  <text x="765" y="349" font-size="11" fill="#475569">• Service Logs Controller</text>
+  <text x="765" y="367" font-size="11" fill="#475569">• Roadside Garages Controller</text>
+
+  <rect x="750" y="420" width="260" height="150" rx="8" fill="url(#serverGrad)" stroke="#4F46E5" stroke-width="1.5" />
+  <text x="765" y="448" font-size="14" font-weight="700" fill="#312E81">Maintenance Rules Engine</text>
+  <text x="765" y="471" font-size="11" fill="#3730A3">• Dual-Condition Evaluator (km vs days)</text>
+  <text x="765" y="489" font-size="11" fill="#3730A3">• Dynamic model_component_configs</text>
+  <text x="765" y="507" font-size="11" fill="#3730A3">• Composite wear ratio calculation:</text>
+  <text x="765" y="525" font-size="11" font-weight="600" fill="#3730A3">  ρ = MAX(ΔKm/TargetKm, ΔDays/TargetDays)</text>
+  <text x="765" y="545" font-size="11" fill="#3730A3">• Deterministic R/Y/G status resets</text>
+
+  <!-- TIER 3: DATA TIER & EXTERNAL SERVICES -->
+  <!-- Wire backend to Postgres -->
+  <path d="M1030,300 L1100,300" fill="none" stroke="#4F46E5" stroke-width="2" marker-end="url(#arr)" />
+  
+  <!-- PostgreSQL -->
+  <rect x="1100" y="100" width="210" height="340" rx="14" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2" filter="url(#boxShadow)"/>
+  <rect x="1100" y="100" width="210" height="42" rx="14" fill="#D97706"/>
+  <text x="1120" y="128" font-size="14" font-weight="700" fill="#FFFFFF">DATA TIER (PostgreSQL 16)</text>
+  
+  <text x="1120" y="170" font-size="12" font-weight="700" fill="#92400E">Docker Container</text>
+  <text x="1120" y="195" font-size="11" fill="#78350F">• users</text>
+  <text x="1120" y="215" font-size="11" fill="#78350F">• vehicle_models</text>
+  <text x="1120" y="235" font-size="11" fill="#78350F">• components</text>
+  <text x="1120" y="255" font-size="11" fill="#78350F">• model_component_configs</text>
+  <text x="1120" y="275" font-size="11" fill="#78350F">• vehicles</text>
+  <text x="1120" y="295" font-size="11" fill="#78350F">• reminder_rules</text>
+  <text x="1120" y="315" font-size="11" fill="#78350F">• garages</text>
+  <text x="1120" y="335" font-size="11" fill="#78350F">• service_logs</text>
+  <text x="1120" y="355" font-size="11" fill="#78350F">• service_log_items</text>
+  <text x="1120" y="375" font-size="11" fill="#78350F">• odometer_histories</text>
+  <text x="1120" y="405" font-size="10" font-style="italic" fill="#B45309">Integer currency (cents)</text>
+
+  <!-- External Services -->
+  <rect x="1100" y="465" width="210" height="215" rx="14" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="1120" y="495" font-size="13" font-weight="700" fill="#475569">EXTERNAL SERVICES</text>
+
+  <rect x="1115" y="515" width="180" height="65" rx="6" fill="#F8FAFC" stroke="#E2E8F0" />
+  <text x="1125" y="538" font-size="11" font-weight="700" fill="#1E293B">Google Places API</text>
+  <text x="1125" y="556" font-size="10" fill="#64748B">Phnom Penh garage lookup</text>
+  <text x="1125" y="570" font-size="10" fill="#64748B">Fallback: Local DB seed</text>
+
+  <rect x="1115" y="595" width="180" height="65" rx="6" fill="#F8FAFC" stroke="#E2E8F0" />
+  <text x="1125" y="618" font-size="11" font-weight="700" fill="#1E293B">Receipt &amp; Photo Storage</text>
+  <text x="1125" y="636" font-size="10" fill="#64748B">Supabase / Local cache</text>
+  <text x="1125" y="650" font-size="10" fill="#64748B">Oil bottle &amp; odometer snaps</text>
+
+  <path d="M1010,350 L1115,545" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-gray)" />
+</svg>

@@ -4,7 +4,7 @@ Bachelor of Computer Science — Individual Capstone
 
 | | |
 |---|---|
-| Student | Kimchhay |
+| Student | Thoeurn Kimchhay (ធឿន គីមឆាយ) |
 | Advisor | Hang Sopheak |
 | Term |  Year 4, Semester 1  |
 | Pitch | A hyper-local vehicle maintenance companion for Cambodian scooter riders and car owners that automates preventive servicing with authentic Khmer mechanic slang, dynamic component configs, and 15-minute roadside garage dwell reminders. |

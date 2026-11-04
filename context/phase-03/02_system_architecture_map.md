@@ -13,6 +13,8 @@
 
 ## 1. High-Level Component Map
 
+![System Architecture Map](../assets/system_architecture.svg)
+
 ```mermaid
 graph TD
     subgraph Client["Flutter Mobile Client (iOS & Android)"]
@@ -91,6 +93,8 @@ All production secrets (PostgreSQL database credentials, JWT secret keys, and Go
 | 6 | Client App (UI Update) | API responds with `201 Created` and updated vehicle health summary. Client updates local Drift cache, switches the Engine Oil card from Yellow/Red to Green (`1,500 km remaining`), and displays a Khmer confirmation snackbar: *"បានរក្សាទុកការជួសជុលដោយជោគជ័យ (Service saved successfully)"*. |
 
 ## 4. State Transition Flowchart (Reminder Lifecycle State Machine)
+
+![Reminder State Machine](../assets/state_machine.svg)
 
 ```mermaid
 stateDiagram-v2
