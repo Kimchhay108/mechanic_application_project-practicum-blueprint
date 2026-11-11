@@ -39,7 +39,7 @@ erDiagram
 
     users {
         uuid id PK
-        string phone UK
+        string phone "UK"
         string full_name
         string language_preference
         timestamp created_at
@@ -59,7 +59,7 @@ erDiagram
 
     components {
         uuid id PK
-        string code UK
+        string code "UK"
         string name_en
         string name_km
         string category
@@ -107,7 +107,7 @@ erDiagram
 
     garages {
         uuid id PK
-        uuid user_id FK "nullable"
+        uuid user_id FK
         string name
         string phone
         string address
@@ -121,7 +121,7 @@ erDiagram
     service_logs {
         uuid id PK
         uuid vehicle_id FK
-        uuid garage_id FK "nullable"
+        uuid garage_id FK
         date service_date
         int odometer_km
         int total_cost_cents
