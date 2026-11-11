@@ -570,6 +570,164 @@ def create_state_machine_svg():
     return svg
 
 
+
+
+def create_api_contracts_svg():
+    width = 1450
+    height = 940
+
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="headerGradApi" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.06" />
+    </filter>
+
+    <style>
+      .badge-get {{ fill: #ECFDF5; stroke: #059669; stroke-width: 1; }}
+      .badge-get-txt {{ font-size: 11px; font-weight: 700; fill: #065F46; font-family: 'Consolas', monospace; }}
+      .badge-post {{ fill: #EFF6FF; stroke: #2563EB; stroke-width: 1; }}
+      .badge-post-txt {{ font-size: 11px; font-weight: 700; fill: #1E40AF; font-family: 'Consolas', monospace; }}
+      .badge-patch {{ fill: #FFFBEB; stroke: #D97706; stroke-width: 1; }}
+      .badge-patch-txt {{ font-size: 11px; font-weight: 700; fill: #92400E; font-family: 'Consolas', monospace; }}
+      .badge-auth-yes {{ fill: #FEF2F2; stroke: #DC2626; stroke-width: 1; }}
+      .badge-auth-yes-txt {{ font-size: 10px; font-weight: 600; fill: #991B1B; }}
+      .badge-auth-no {{ fill: #F1F5F9; stroke: #64748B; stroke-width: 1; }}
+      .badge-auth-no-txt {{ font-size: 10px; font-weight: 600; fill: #475569; }}
+      .endpoint-title {{ font-size: 13px; font-weight: 700; fill: #0F172A; font-family: 'Consolas', monospace; }}
+      .desc-text {{ font-size: 11px; fill: #475569; }}
+      .detail-label {{ font-size: 10.5px; font-weight: 700; fill: #334155; }}
+      .detail-code {{ font-size: 10.5px; fill: #0284C7; font-family: 'Consolas', monospace; }}
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="{width}" height="{height}" fill="#F8FAFC" />
+
+  <!-- Title & Conventions Bar -->
+  <g transform="translate(40, 30)">
+    <rect width="1370" height="90" rx="10" fill="url(#headerGradApi)" />
+    <text x="24" y="36" font-size="20" font-weight="700" fill="#FFFFFF">MotoCare Cambodia — REST API Contracts Map</text>
+    <text x="24" y="58" font-size="12" fill="#94A3B8">Phase 3.4 Specification | Port 8000 | Base URL: http://localhost:8000/api/v1 | Standard Bearer JWT Auth</text>
+    <text x="24" y="74" font-size="11" fill="#38BDF8">Standard Error Format: &#123;"error": &#123;"code": "ERROR_CODE", "message": "Human readable text", "details": []&#125;&#125;</text>
+
+    <!-- Standard Status Badges -->
+    <g transform="translate(930, 25)">
+      <rect x="0" y="0" width="415" height="42" rx="6" fill="#1E293B" stroke="#334155" />
+      <text x="12" y="18" font-size="10" font-weight="700" fill="#94A3B8">STATUS CODES</text>
+      <text x="12" y="32" font-size="10" fill="#CBD5E1">200 OK  ·  201 Created  ·  400 Validation  ·  401 Auth  ·  403 Forbidden  ·  404 Not Found</text>
+    </g>
+  </g>
+"""
+
+    def render_api_card(x, y, w, h, ep_id, method, route, auth_req, desc, req_info, res_info, assert_info):
+        m_badge_class = "badge-get" if method == "GET" else ("badge-post" if method == "POST" else "badge-patch")
+        m_txt_class = "badge-get-txt" if method == "GET" else ("badge-post-txt" if method == "POST" else "badge-patch-txt")
+        auth_badge = "badge-auth-yes" if auth_req else "badge-auth-no"
+        auth_txt = "badge-auth-yes-txt" if auth_req else "badge-auth-no-txt"
+        auth_label = "🔒 JWT Bearer" if auth_req else "🌐 Public"
+
+        return f"""
+  <g transform="translate({x}, {y})" filter="url(#cardShadow)">
+    <rect width="{w}" height="{h}" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" />
+    
+    <!-- Top Row -->
+    <rect x="14" y="14" width="48" height="22" rx="4" class="{m_badge_class}" />
+    <text x="38" y="29" text-anchor="middle" class="{m_txt_class}">{method}</text>
+
+    <text x="70" y="29" class="endpoint-title">{ep_id} — {route}</text>
+
+    <rect x="{w-95}" y="14" width="82" height="20" rx="4" class="{auth_badge}" />
+    <text x="{w-54}" y="28" text-anchor="middle" class="{auth_txt}">{auth_label}</text>
+
+    <line x1="14" y1="44" x2="{w-14}" y2="44" stroke="#F1F5F9" stroke-width="1" />
+
+    <!-- Description -->
+    <text x="16" y="62" class="desc-text">{desc}</text>
+
+    <!-- Request / Response Box -->
+    <rect x="14" y="74" width="{w-28}" height="72" rx="6" fill="#F8FAFC" stroke="#F1F5F9" />
+    <text x="24" y="92" class="detail-label">Payload:</text>
+    <text x="80" y="92" class="detail-code">{req_info}</text>
+
+    <text x="24" y="112" class="detail-label">Response:</text>
+    <text x="80" y="112" class="detail-code">{res_info}</text>
+
+    <text x="24" y="132" class="detail-label">Assertion:</text>
+    <text x="80" y="132" font-size="10" fill="#059669">{assert_info}</text>
+  </g>
+"""
+
+    c1_cards = [
+        (40, 140, 670, 160, "EP-01", "GET", "/api/v1/health", False,
+         "System health check probe returning service uptime and ISO-8601 timestamp.",
+         "None (Empty body)", "200 OK -> {\"status\": \"ok\", \"timestamp\": \"2026-10-17T...\"}",
+         "status == 200 && response.status == 'ok'"),
+
+        (40, 315, 670, 160, "EP-02", "POST", "/api/v1/vehicles", True,
+         "Registers user vehicle profile and auto-binds model-component maintenance rules.",
+         "{\"vehicle_model_id\": UUID, \"license_plate\": \"1JJ-8888\", \"current_odometer\": 12450}",
+         "201 Created -> data: {\"id\": UUID, \"bound_reminders_count\": 3}",
+         "status == 201 && data.id != null && bound_reminders_count >= 1"),
+
+        (40, 490, 670, 160, "EP-03", "GET", "/api/v1/vehicles", True,
+         "Lists all registered vehicles for the authenticated user with real-time health summary.",
+         "None (Filtered by JWT userId)", "200 OK -> data: [ { model, license_plate, health_summary: { status } } ]",
+         "status == 200 && Array.isArray(data) && data[0].health_summary.status exists"),
+
+        (40, 665, 670, 160, "EP-04", "PATCH", "/api/v1/vehicles/:id/odometer", True,
+         "Updates current odometer mileage and dynamically re-evaluates all reminder rules.",
+         "{\"odometer_km\": 13500, \"source\": \"manual\"}",
+         "200 OK -> data: { vehicle_id, current_odometer: 13500, updated_reminders: [...] }",
+         "status == 200 && data.current_odometer == 13500")
+    ]
+
+    c2_cards = [
+        (740, 140, 670, 160, "EP-05", "GET", "/api/v1/vehicles/:id/reminders", True,
+         "Returns active component reminder rules, remaining km/days, and Khmer slang names.",
+         "None (Vehicle ID in path parameter)", "200 OK -> data: [ { component: { name_km: 'ប្រេងម៉ាស៊ីន' }, status, remaining_km } ]",
+         "status == 200 && data[0].component.name_km exists && ['upcoming','due_soon','overdue'].includes(status)"),
+
+        (740, 315, 670, 160, "EP-06", "POST", "/api/v1/vehicles/:id/services", True,
+         "Logs 1-tap completed maintenance, records service_logs, and resets baseline counters.",
+         "{\"garage_id\": UUID, \"odometer_km\": 13500, \"total_cost_cents\": 500, \"items\": [...] }",
+         "201 Created -> data: { service_log_id, reset_reminders: [ { new_status: 'upcoming' } ] }",
+         "status == 201 && reset_reminders[0].new_status == 'upcoming'"),
+
+        (740, 490, 670, 160, "EP-07", "GET", "/api/v1/vehicles/:id/services", True,
+         "Retrieves paginated historical service logs with line items, parts cost, and garage name.",
+         "None (Query: ?page=1&limit=20)", "200 OK -> data: [ { id, service_date, total_cost_cents: 500, items: [...] } ]",
+         "status == 200 && Number.isInteger(data[0].total_cost_cents)"),
+
+        (740, 665, 670, 160, "EP-08", "POST", "/api/v1/garages", True,
+         "Pins a trusted roadside mechanic stall (ឈ្មោះជាង, លេខទូរស័ព្ទ, GPS coordinates).",
+         "{\"name\": \"ជាង រិទ្ធ ជួសជុលម៉ូតូ\", \"phone\": \"+85512888999\", \"latitude\": 11.568, \"longitude\": 104.89 }",
+         "201 Created -> data: { id: UUID, name: \"ជាង រិទ្ធ...\", is_verified: false }",
+         "status == 201 && data.name.includes('រិទ្ធ')")
+    ]
+
+    for (x, y, w, h, ep_id, method, route, auth_req, desc, req_info, res_info, assert_info) in c1_cards:
+        svg += render_api_card(x, y, w, h, ep_id, method, route, auth_req, desc, req_info, res_info, assert_info)
+
+    for (x, y, w, h, ep_id, method, route, auth_req, desc, req_info, res_info, assert_info) in c2_cards:
+        svg += render_api_card(x, y, w, h, ep_id, method, route, auth_req, desc, req_info, res_info, assert_info)
+
+    svg += f"""
+  <g transform="translate(40, 845)">
+    <rect width="1370" height="65" rx="8" fill="#FFFFFF" stroke="#CBD5E1" filter="url(#cardShadow)" />
+    <text x="20" y="26" font-size="12" font-weight="700" fill="#0F172A">AUTOMATED API TEST COLLECTION VERIFICATION</text>
+    <text x="20" y="46" font-size="11" fill="#475569">Collection File: <tspan font-family="'Consolas', monospace" font-weight="700" fill="#2563EB">api-specs/motocare_api_collection.json</tspan> | 8 Endpoints covered with status &amp; JSON schema assertions.</text>
+    
+    <rect x="1170" y="16" width="180" height="32" rx="6" fill="#ECFDF5" stroke="#10B981" />
+    <text x="1260" y="36" text-anchor="middle" font-size="11" font-weight="700" fill="#065F46">✓ 8 / 8 Contracts Specified</text>
+  </g>
+</svg>"""
+    return svg
+
+
 def main():
     target_dir = os.path.abspath("d:/PPS1Y4/context/assets")
     os.makedirs(target_dir, exist_ok=True)
@@ -589,25 +747,29 @@ def main():
         f.write(create_state_machine_svg())
     print(f"Created: {fsm_path}")
 
-    # Also create an interactive viewer HTML in context/assets/preview_diagrams.html
+    api_path = os.path.join(target_dir, "api_contracts_map.svg")
+    with open(api_path, "w", encoding="utf-8") as f:
+        f.write(create_api_contracts_svg())
+    print(f"Created: {api_path}")
+
     html_path = os.path.join(target_dir, "preview_diagrams.html")
     html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MotoCare Cambodia — Phase 3 Technical Diagrams</title>
+  <title>MotoCare Cambodia — Phase 3 Technical Diagrams &amp; API Contracts</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
     body { background: #0F172A; color: #F8FAFC; padding: 24px; }
-    header { max-width: 1400px; margin: 0 auto 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 16px; }
+    header { max-width: 1450px; margin: 0 auto 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 16px; }
     h1 { font-size: 22px; color: #38BDF8; }
     p { font-size: 13px; color: #94A3B8; margin-top: 4px; }
     .tabs { display: flex; gap: 10px; }
     .tab-btn { background: #1E293B; color: #E2E8F0; border: 1px solid #475569; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
     .tab-btn:hover { background: #334155; }
     .tab-btn.active { background: #2563EB; border-color: #3B82F6; color: #FFFFFF; }
-    .container { max-width: 1400px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); overflow: auto; min-height: 700px; }
+    .container { max-width: 1450px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); overflow: auto; min-height: 700px; }
     .diagram-panel { display: none; text-align: center; }
     .diagram-panel.active { display: block; }
     img, svg { max-width: 100%; height: auto; border-radius: 8px; }
@@ -617,13 +779,14 @@ def main():
 <body>
   <header>
     <div>
-      <h1>MotoCare Cambodia — Phase 3 Architectural & Data Diagrams</h1>
+      <h1>MotoCare Cambodia — Phase 3 Technical Diagrams &amp; API Contracts</h1>
       <p>Student: Thoeurn Kimchhay (ធឿន គីមឆាយ) | Advisor: Hang Sopheak | Royal University of Phnom Penh (RUPP)</p>
     </div>
     <div class="tabs">
       <button class="tab-btn active" onclick="showTab('erd')">1. Database ERD</button>
       <button class="tab-btn" onclick="showTab('arch')">2. System Architecture</button>
       <button class="tab-btn" onclick="showTab('fsm')">3. Reminder State Machine</button>
+      <button class="tab-btn" onclick="showTab('api')">4. REST API Contracts Map</button>
     </div>
   </header>
 
@@ -641,6 +804,11 @@ def main():
     <div id="fsm" class="diagram-panel">
       <img src="state_machine.svg" alt="Reminder Lifecycle State Machine" />
       <div class="caption">Figure 3.2b: Deterministic 4-State Reminder Lifecycle State Machine with dual-condition trigger evaluations.</div>
+    </div>
+
+    <div id="api" class="diagram-panel">
+      <img src="api_contracts_map.svg" alt="REST API Contracts Map" />
+      <div class="caption">Figure 3.4: Complete REST API Contracts Map (EP-01 to EP-08) covering Health, Vehicles, Reminders, Services, and Garages.</div>
     </div>
   </div>
 

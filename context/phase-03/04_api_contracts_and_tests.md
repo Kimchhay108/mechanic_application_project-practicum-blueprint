@@ -20,6 +20,8 @@
 
 ## 2. API Specification Table
 
+![REST API Contracts Map](../assets/api_contracts_map.svg)
+
 | ID | Method | Endpoint | Description | Auth required | Feature |
 |---|---|---|---|---|---|
 | EP-01 | GET | /api/v1/health | System health check and status | No | n/a |
